@@ -27,3 +27,6 @@ text_state_server-*.tar
 
 # ElixirLS plugin.
 /.elixir_ls/
+
+# Dev env files.
+/files/
