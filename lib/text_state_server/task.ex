@@ -7,8 +7,12 @@ defmodule TextStateServer.Task do
 
   def start_link(opts) do
     state_file = Keyword.get(opts, :state_file)
+    tmp_file2 = Keyword.get(opts, :tmp_file2)
+    tmp_file3 = Keyword.get(opts, :tmp_file3)
 
-    GenServer.start_link(__MODULE__, %{state_file: state_file}, name: __MODULE__)
+    state = %{state_file: state_file, tmp_file2: tmp_file2, tmp_file3: tmp_file3}
+
+    GenServer.start_link(__MODULE__, state, name: __MODULE__)
   end
 
   @impl true
@@ -32,41 +36,48 @@ defmodule TextStateServer.Task do
   end
 
   @impl true
-  def handle_cast({_user, _source, message}, state)
-      when message in ["client1", "client2", "client3"] do
-    Logger.debug("Heartbeat from #{message}")
+  def handle_cast({user, _source, "heartbeat"}, state) when user in [:cnt1, :cnt2, :cnt3] do
+    Logger.debug("Heartbeat from #{user}")
 
     {:noreply, state}
   end
 
   @impl true
-  def handle_cast({:cnt2, _source, "client2|NULL"}, %{state_file: state_file} = state) do
+  def handle_cast({:cnt2, _source, "NULL"}, state) do
+    %{state_file: state_file, tmp_file2: tmp_file2} = state
+
     overwrite_id2(state_file, "null")
-    write_tmp2("null")
+    write(tmp_file2, "null")
 
     {:noreply, state}
   end
 
   @impl true
-  def handle_cast({:cnt2, _source, <<"client2|" <> info>>}, %{state_file: state_file} = state) do
+  def handle_cast({:cnt2, _source, info}, state) do
+    %{state_file: state_file, tmp_file2: tmp_file2} = state
+
     overwrite_id2(state_file, "null")
-    write_tmp2(info)
+    write(tmp_file2, info)
 
     {:noreply, state}
   end
 
   @impl true
-  def handle_cast({:cnt3, _source, "client3|NULL"}, %{state_file: state_file} = state) do
+  def handle_cast({:cnt3, _source, "NULL"}, state) do
+    %{state_file: state_file, tmp_file3: tmp_file3} = state
+
     overwrite_id3(state_file, "null")
-    write_tmp3("null")
+    write(tmp_file3, "null")
 
     {:noreply, state}
   end
 
   @impl true
-  def handle_cast({:cnt3, _source, "client3|INFO"}, %{state_file: state_file} = state) do
+  def handle_cast({:cnt3, _source, info}, state) do
+    %{state_file: state_file, tmp_file3: tmp_file3} = state
+
     overwrite_id3(state_file, "null")
-    write_tmp3("INFO")
+    write(tmp_file3, info)
 
     {:noreply, state}
   end
@@ -85,17 +96,8 @@ defmodule TextStateServer.Task do
     :gen_udp.send(socket, ip, port, packet)
   end
 
-  @spec write_tmp2(iodata) :: :ok
-  defp write_tmp2(iodata) do
-    path = "/" |> Path.join("tmp") |> Path.join("2.txt")
-
-    File.write!(path, iodata)
-  end
-
-  @spec write_tmp3(iodata) :: :ok
-  defp write_tmp3(iodata) do
-    path = "/" |> Path.join("tmp") |> Path.join("3.txt")
-
+  @spec write(Path.t(), iodata) :: :ok
+  defp write(path, iodata) do
     File.write!(path, iodata)
   end
 
