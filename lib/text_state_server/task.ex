@@ -49,6 +49,8 @@ defmodule TextStateServer.Task do
     overwrite_id2(state_file, "null")
     write(tmp_file2, "null")
 
+    Logger.debug("Receive and write data `null` from cnt2")
+
     {:noreply, state}
   end
 
@@ -58,6 +60,8 @@ defmodule TextStateServer.Task do
 
     overwrite_id2(state_file, "null")
     write(tmp_file2, info)
+
+    Logger.debug("Receive and write data `#{info}` from cnt2")
 
     {:noreply, state}
   end
@@ -69,6 +73,8 @@ defmodule TextStateServer.Task do
     overwrite_id3(state_file, "null")
     write(tmp_file3, "null")
 
+    Logger.debug("Receive and write data `null` from cnt3")
+
     {:noreply, state}
   end
 
@@ -78,6 +84,8 @@ defmodule TextStateServer.Task do
 
     overwrite_id3(state_file, "null")
     write(tmp_file3, info)
+
+    Logger.debug("Receive and write data `#{info}` from cnt3")
 
     {:noreply, state}
   end
