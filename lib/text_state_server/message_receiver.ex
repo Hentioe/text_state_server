@@ -15,7 +15,7 @@ defmodule TextStateServer.MessageReceiver do
 
   @impl true
   def init(%{port: port} = state) do
-    {:ok, socket} = :gen_udp.open(port)
+    {:ok, socket} = :gen_udp.open(port, [:binary])
 
     {:ok, Map.put(state, :socket, socket)}
   end
