@@ -30,3 +30,5 @@ text_state_server-*.tar
 
 # Dev env files.
 /files/
+
+/.env
