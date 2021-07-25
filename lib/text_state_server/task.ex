@@ -29,8 +29,10 @@ defmodule TextStateServer.Task do
   end
 
   @impl true
-  def handle_cast({_user, source, "fetch"}, %{state_file: state_file} = state) do
+  def handle_cast({user, source, "fetch"}, %{state_file: state_file} = state) do
     resp(source, File.read!(state_file))
+
+    Logger.debug("Fetching from #{user}")
 
     {:noreply, state}
   end
