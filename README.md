@@ -22,7 +22,7 @@
 使用命令解压打包好的程序：
 
 ```bash
-tar -zxvf text_state_server-1.0.0-bin.tar.gz
+tar -zxvf text_state_server-1.0.1-bin.tar.gz
 ```
 
 进入主目录并创建配置文件:
@@ -138,11 +138,11 @@ _提示：如果您想知道这背后做了什么，请查看源码根目录的 
 
 ### 构建项目
 
-解压 text_state_server-1.0.0-src.tar.gz 文件，并进入主目录：
+解压 text_state_server-1.0.1-src.tar.gz 文件，并进入主目录：
 
 ```bash
-tar -zxvf text_state_server-1.0.0-src.tar.gz
-cd text_state_server-1.0.0
+tar -zxvf text_state_server-1.0.1-src.tar.gz
+cd text_state_server-1.0.1
 ```
 
 构建项目：
@@ -162,11 +162,11 @@ _注意：部分命令可能会产生一些警告，这是正常的。_
 
 ### 打包项目
 
-请保证处于 text_state_server-1.0.0 目录中，执行以下命令：
+请保证处于 text_state_server-1.0.1 目录中，执行以下命令：
 
 ```bash
 cd _build/prod/rel
-tar -zcvf text_state_server-1.0.0-bin.tar.gz text_state_server/
+tar -zcvf text_state_server-1.0.1-bin.tar.gz text_state_server/
 ```
 
 至此，生成的压缩文件已经可部署至运行机器人的服务器上了。
