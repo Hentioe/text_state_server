@@ -1,5 +1,7 @@
 import Mix.Config
 
+config :logger, :console, format: "$date:$time [$level] $message $metadata\n"
+
 # 默认日志级别为 :debug。
 config :logger, level: :debug
 
