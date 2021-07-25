@@ -23,7 +23,8 @@ defmodule TextStateServer.MixProject do
   defp deps do
     [
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.1", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
+      {:dotenv, "~> 3.1"}
     ]
   end
 end
